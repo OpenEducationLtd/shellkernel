@@ -1,0 +1,62 @@
+ ; ZSTD Watchdog 1.1 | Made for ShellLinux
+
+ ; Import headers
+class headers = [
+ "#! zstd_version_1",
+ "#! zstd_library",
+ "#! zstd_kernel",
+ "#! zstd_config"
+]
+bool loadHeaders = from headers::import(*)
+loadHeaders()
+
+ ; Main function
+
+ class main(loadHeaders()){
+ ZSTD_CONFIG_HEADER = ["
+ZSTD_VERSION = 1.1
+ZSTD_KERNEL = oracle_linux_latest_9
+ZSTD_NAME = ZSTD
+ "]
+ zstd_kernel::system()[
+EXPORT_SYMBOL_GPL(FSE_readNCount)
+EXPORT_SYMBOL_GPL(HUF_readStats)
+EXPORT_SYMBOL_GPL(HUF_readStats_wksp)
+EXPORT_SYMBOL_GPL(ZSTD_isError)
+EXPORT_SYMBOL_GPL(ZSTD_getErrorName)
+EXPORT_SYMBOL_GPL(ZSTD_getErrorCode)
+EXPORT_SYMBOL_GPL(ZSTD_customMalloc)
+EXPORT_SYMBOL_GPL(ZSTD_customCalloc)
+EXPORT_SYMBOL_GPL(ZSTD_customFree)
+ ]
+ }
+ ; Import headers for kernelPatch
+ class kernelHeaders = ["
+ #! systemd
+ #! t2sde
+ #! oracle_linux_latest_9
+ "]
+ patchHeaders = from kernelHeaders::import(*)
+ 
+ class kernelPatch(patchHeaders(), loadHeaders()){
+ from zstd_library::scanf(find *, int64, int32){
+ from i::zstd_load(minwig_ver_32)
+ from i::zstd_load(minwig_ver_64)
+ from i::zstd_load(def BOOTHEADER_32)
+ from i::zstd_load(def BOOTHEADER_64)
+ from i::zstd_load(minwig_ver(SIGNBOOTABLEFILE(BOOTHEADER_32, BOOTHEADER_64)))
+ from i::zstd_load(minwig_ver(BOOTFILE(from BOOTHEADER_32::import(BOOTFILE, *), from BOOTHEADER_64::import(BOOTFILE, *))))
+ from zstd_library::scanf(find *, pb, pc){
+ from i::zstd_load(minwig_ver(PORTGPL(BOOTHEADER_32, BOOTHEADER_64)))
+ from i::zstd_load(zstd_library(PORTGPL(minwig_ver_32, minwig_ver_64, *)))
+ from i::zstd_load(zstd_library(PORTGPL(zstd_kernel::system(EXPORT_SYMBOL_GPL(HUF_readStats)))))
+ from i::zstd_load(zstd_library(loadHeaders(), zstd_kernel::systemload(bool"manager -C -wb", BOOTHEADER_32, BOOTHEADER_64)))
+ }
+ 
+ class systemPaging(patchHeaders(), loadHeaders()){
+ from i::zstd_load(scanf(*, BOOTHEADER_32, BOOTHEADER_64)), from i::zstd_load(zstd_kernel::systemload(EXPORT_PAGE_FILE(0x0, bigEndian)))
+ from i::zstd_load(zstd_kernel::systemload("manager -C -wb", *)), from i::zstd_load(zstd_kernel::dbginfo(zstd_version_1))
+ from i::zstd_load(zstd_kernel::systemload(scanf(*, "manager -C -wb", BOOTHEADER_32, BOOTHEADER_64)))
+ from i::zstd_load(zstd_kernel::systemload(scanf(*, chunks::apply(*, BOOTHEADER_32, BOOTHEADER_64, zstd_version_1))))
+ }
+

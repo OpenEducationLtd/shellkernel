@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<domain type='qemu'>
+
+  <name>my-qemu-vm</name>
+
+  <memory unit='KiB'>1024000</memory>
+
+  <currentMemory unit='KiB'>1024000</currentMemory>
+
+  <vcpu placement='static'>4</vcpu>
+
+  <os>
+
+    <type arch='x86_64' machine='pc-q35-5.2'>hvm</type>
+
+    <boot dev='hd'/>
+
+  </os>
+
+  <features>
+
+    <acpi/>
+
+    <apic/>
+
+  </features>
+
+  <cpu mode='host-model' check='partial'>
+
+    <model fallback='allow'>Haswell</model>
+
+    <feature policy='require' name='vmx'/>
+
+  </cpu>
+
+  <clock offset='utc'>
+
+    <timer name='hpet' present='yes'/>
+
+    <timer name='pit' tickpolicy='delay'/>
+
+    <timer name='rtc' tickpolicy='catchup'/>
+
+  </clock>
+
+  <on_poweroff>destroy</on_poweroff>
+
+  <on_reboot>restart</on_reboot>
+
+  <on_crash>restart</on_crash>
+
+  <devices>
+
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+
+    <controller type='usb' index='0' model='qemu-xhci' ports='15'>
+
+      <address type='usb-bus' bus='0' port='1'/>
+
+    </controller>
+
+    <controller type='sata' index='0'>
+
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
+
+    </controller>
+
+    <controller type='pci' index='0' model='pcie-root'/>
+
+    <controller type='pci' index='1' model='pcie-root-port'>
+
+      <model name='pcie-root-port'/>
+
+      <target chassis='1' port='0x10'/>
+
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x0' multifunction='on'/>
+
+    </controller>
+
+    <controller type='pci' index='2' model='pcie-root-port'>
+
+      <model name='pcie-root-port'/>
+
+      <target chassis='2' port='0x11'/>
+
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0' multifunction='on'/>
+
+    </controller>
+
+    <controller type='pci' index='3' model='pcie-root-port'>
+
+      <model name='pcie-root-port'/>
+
+      <target chassis='3' port='0x12'/>
+
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0' multifunction='on'/>
+
+    </controller>
+
+    <controller type='pci' index='4' model='pcie-root-port'>
+
+      <model name='pcie-root-port'/>
+
+      <target chassis='4' port='0x13'/>
+
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0' multifunction='on'/>
+
+    </controller>
+
+    <controller type='pci' index='5' model='pcie-root-port'>
+
+      <model name='pcie-root-port'/>
+
+      <target chassis='5' port='0x14'/>
+
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0' multifunction='on'/>
+
+    </controller>
+    <setup>
+    <setupfile>automan.log</setupfile>
+    <setup-patch>automan.patch<setup-patch>
+    </setup>
+    <compiler>
+    <assembly-config>instruction_set.config</assembly-config>
+    </compiler>

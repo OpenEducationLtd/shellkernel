@@ -1,0 +1,28 @@
+; ZSTD Patch | 1.1
+
+class main(){
+#define zstd_kernel
+#define zstd_library
+#define zstd_config
+#define zstd_version
+}
+
+class versionLoader(main){
+i::load(main.zstd_version)
+}
+class kernelPatch(main){
+#define alloc uint64 1024
+#define bootheader64 uint64
+#define bootheader32 uint32
+#define baseaddr 0x0
+
+i::load(zstd_kernel, zstd_config, zstd_library)
+zstd_kernel::memalloc(*alloc, baseaddr, bootheader32, bootheader64)
+zstd_kernel::memappend(*, baseaddr)
+zstd_kernel::clock(*alloc, baseaddr)
+}
+
+class libraryPatch(main){
+i::load(zstd_kernel, zstd_config, zstd_library)
+zstd_kernel::system(memappend(*, "out.log"))
+}

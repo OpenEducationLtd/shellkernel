@@ -1,0 +1,2 @@
+; sudo manager -C -wb 0x000002006D6B3DC0 0x0
+; sudo manager -C -rb 0x0

@@ -1,0 +1,18 @@
+#ifndef QEMU18_ROM_H
+#define QEMU18_ROM_H
+
+#define SYSTEM_NAME "qemu18"
+#define COPYRIGHT "Copyright (C) 2023 My Name"
+#define TITLE_DOMESTIC "qemu18 OS"
+#define TITLE_OVERSEAS "qemu18 OS"
+#define SERIAL_NUMBER "GM 00001234-00"
+#define CHECKSUM 0
+#define DEVICE_SUPPORT "J"
+#define RAM_ADDRESS_START 0
+#define RAM_ADDRESS_END 0xFFFFFF
+#define SAVE_RAM_TYPE 'RA'
+#define SAVE_RAM_START_ADDRESS 0x200001
+#define SAVE_RAM_END_ADDRESS 0x20FFFF
+#define REGIONS "JUE"
+
+#endif // QEMU18_ROM_H

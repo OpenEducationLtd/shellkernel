@@ -1,0 +1,31 @@
+
+
+ ; Import headers
+class headers = [
+ "#! zstd_version_1",
+ "#! zstd_library",
+ "#! zstd_kernel",
+ "#! zstd_config"
+]
+bool loadHeaders = from headers::import(*)
+loadHeaders()
+
+ ; Main function
+
+class main(loadHeaders()){
+from i::zstd_library(memappend(scanf(systemload(BOOTHEADER_32, BOOTHEADER_64))))
+from i::zstd_library(savefile(from i::zstd_kernel(scanf(*, BOOTHEADER_32, BOOTHEADER_64))), "" *.elf)
+from i::zstd_library(savefile(from i::zstd_kernel(chunks::append(scanf(*, BOOTHEADER_32, BOOTHEADER_64)))))
+from i::zstd_library(savefile(from i::zstd_kernel(memappend(scanf(*, *.elf, BOOTHEADER_32, BOOTHEADER_64)))))
+}
+ zstd_kernel::system()[
+EXPORT_SYMBOL_GPL(FSE_readNCount)
+EXPORT_SYMBOL_GPL(HUF_readStats)
+EXPORT_SYMBOL_GPL(HUF_readStats_wksp)
+EXPORT_SYMBOL_GPL(ZSTD_isError)
+EXPORT_SYMBOL_GPL(ZSTD_getErrorName)
+EXPORT_SYMBOL_GPL(ZSTD_getErrorCode)
+EXPORT_SYMBOL_GPL(ZSTD_customMalloc)
+EXPORT_SYMBOL_GPL(ZSTD_customCalloc)
+EXPORT_SYMBOL_GPL(ZSTD_customFree)
+ ]

@@ -1,0 +1,15 @@
+    movl source, destination - moves a 32-bit value from the source to the destination
+    addl source, destination - adds the source to the destination and stores the result in the destination
+    subl source, destination - subtracts the source from the destination and stores the result in the destination
+    andl source, destination - performs a bitwise AND operation on the source and destination and stores the result in the destination
+    xorl source, destination - performs a bitwise XOR operation on the source and destination and stores the result in the destination
+    shll source, destination - shifts the bits in the destination to the left by the number of bits specified in the source
+    shr source, destination - shifts the bits in the destination to the right by the number of bits specified in the source
+    jmp label - unconditionally jumps to the label
+    jz label - jumps to the label if the zero flag is set
+    jnz label - jumps to the label if the zero flag is not set
+    jl label - jumps to the label if the less-than flag is set
+    jle label - jumps to the label if the less-than or equal-to flag is set
+    jg label - jumps to the label if the greater-than flag is set
+    jge label - jumps to the label if the greater-than or equal-to flag is set
+    call label - calls the subroutine at the label and returns to the caller when it finishes executing.

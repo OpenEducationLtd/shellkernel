@@ -1,0 +1,46 @@
+ ; ZSTD Watchdog 1.1 | Made for ShellLinux
+
+ ; Import headers
+class headers = [
+ "#! zstd_version_1",
+ "#! zstd_library",
+ "#! zstd_kernel",
+ "#! zstd_config"
+]
+bool loadHeaders = from headers::import(*)
+loadHeaders()
+
+ ; Main function
+
+ class main(loadHeaders()){
+ ZSTD_CONFIG_HEADER = ["
+ZSTD_VERSION = 1.1
+ZSTD_KERNEL = oracle_linux_latest_9
+ZSTD_NAME = ZSTD
+ "]
+ zstd_kernel::system()[
+EXPORT_SYMBOL_GPL(FSE_readNCount)
+EXPORT_SYMBOL_GPL(HUF_readStats)
+EXPORT_SYMBOL_GPL(HUF_readStats_wksp)
+EXPORT_SYMBOL_GPL(ZSTD_isError)
+EXPORT_SYMBOL_GPL(ZSTD_getErrorName)
+EXPORT_SYMBOL_GPL(ZSTD_getErrorCode)
+EXPORT_SYMBOL_GPL(ZSTD_customMalloc)
+EXPORT_SYMBOL_GPL(ZSTD_customCalloc)
+EXPORT_SYMBOL_GPL(ZSTD_customFree)
+
+zstd_kernel::systemload(BOOTHEADER_32, BOOTHEADER_64, *)
+zstd_kernel::systemload(scanf(*BOOTFILE, BOOTHEADER_32, BOOTHEADER_64))
+
+class memoryPaging(loadHeaders()){
+from i::zstd_kernel(scanf(systemload(*, chunks::append(*, wb))))
+from i::zstd_library(memappend(scanf(*, BOOTHEADER_32, BOOTHEADER_64)))
+}
+class memoryRead(loadHeaders()){
+from i::zstd_kernel(systemload(scanf(*, BOOTHEADER_32, BOOTHEADER_64))), from i::zstd_kernel(systemload(chunk::append(*1024)))
+from i::zstd_kernel(memappend(*1024, int64, int32))
+}
+class allocMem(loadHeaders()){
+from i::zstd_kernel(systemload(zstd_library::savefile(from i::zstd_kermel(systemload(scanf(*, zstd_kernel::memappend(chunks::append(*1024, BOOTHEADER_32, BOOTHEADER_64)))))
+)))
+}

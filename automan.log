@@ -1,0 +1,13 @@
+sudo manager -C -wb PHYSADDR 0x0
+sudo manager -C -wb 0x0 MEMADDR
+sudo manager -C -wb 0x0 STEAMPIPE
+sudo enigma -r --download aur | echo "" >> /qemu-18 | grep
+sudo enigma -r --download packages | echo "" >> /qemu-18 | grep
+sudo manager -C -wb PHYSADDR kernel32, *
+sudo manger -C -wb PHYSADDR kernel64, *
+sudo manager -C -wb PHYSADDR gpl32
+sudo manager -C -wb PHYSADDR gpl64
+sudo manager -C -wb PHYSADDR heap
+sudo manager -C -wb PHYSADDR MEMADDR
+sudo manager -C -wb 0x0
+sudo manager -C -rb 0x0

@@ -1,0 +1,25 @@
+{
+  sound: {
+    midi: {
+      enabled: true,
+      devices: [
+        {
+          name: MIDI USB PORT 1,
+          driver: realtek,
+          device: hw:0,0,
+          channels: 16,
+          volume: 100
+        },
+        {
+          name: MIDI USB PORT 2,
+          driver: jack,
+          server: local,
+          client: 128,
+          port: 0,
+          channels: 16,
+          volume: 100
+        }
+      ]
+    }
+  }
+}
