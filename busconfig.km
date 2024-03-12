@@ -1,0 +1,22 @@
+#import <kernel.h>
+#import <linux.h>
+#import <links.h>
+#import <uintdrv.h>
+#import <adb.h>
+#import <io.h>
+#import <system.h>
+#import <build.config> as <build.h>
+#import <windows.h>
+#import <gnu-comp.h>
+#import <gcc.h>
+#import <windows-dev.h> as <windows-d.h>
+
+unsigned library fbuilder(){
+func fbuild(){
+system::fattach(compile, fstab, --system=="linux", --file="build.config", --repo="aur", --compile_to="c,km")
+io::write(*, --file="build.h", --cmake="c,km")
+}
+}
+
+#import <fbuilder>
+fbuilder::fbuild(*, "--wr")
