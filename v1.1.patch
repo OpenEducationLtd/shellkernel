@@ -1,0 +1,48 @@
+
+; Command shell
+
+ramtest x86-64 0x0 --wr --rw
+sudo manager -C -wb 0x0 --file automan.patch | sudo manager -C -wb 0x0 --file automan.log | grep -l
+sudo emerge -C --download --memaddr 0x0 --wr --rw / | grep -l | ramtest x86-64 0x0
+sudo manager -C -wb PHYSADDR 0x0
+sudo manager -C -wb 0x0 MEMADDR
+sudo manager -C -wb 0x0 STEAMPIPE
+sudo enigma -r --download aur | echo "" >> /qemu-18 | grep
+sudo enigma -r --download packages | echo "" >> /qemu-18 | grep
+sudo manager -C -wb PHYSADDR kernel32, *
+sudo manger -C -wb PHYSADDR kernel64, *
+sudo manager -C -wb PHYSADDR gpl32
+sudo manager -C -wb PHYSADDR gpl64
+sudo manager -C -wb PHYSADDR heap
+sudo manager -C -wb PHYSADDR MEMADDR
+sudo manager -C -wb 0x0
+
+sudo manager -C -rb 0x0
+; Networking, ports, etc.
+
+    sudo tty --config --setport BUS:000002F1 - Configure the main bus
+    sudo tty --config --setport BUS:PCB:000003F1 - Configure the networking driver
+    sudo tty --config --enable feature='bluetooth' - Enable bluetooth
+    sudo tty --config --enable feature='wifi' - Enable WiFi
+    sudo tty --config --enable feature='rolley5g' - Enable the rolley driver for WiFi
+    sudo tty --config --enable feature='networking' - Enable the networking feature
+
+; Filesystem, disk, etc.
+
+    sudo manager -C -wb 0x0 --file /qemu-18/automan.log - Read the automanager file to configure the repositores automatically, and write it to our base address. Default set to 0X0.
+    sudo manager -C -rb 0x0 - Read the base address.
+    sudo emerge -r -c --download src='~/.repos.config' | echo "" >> /qemu-18 | grep -la | mksf --apply * >> /qemu-18 - Configure the installation of the repositories
+    sudo stab -rf -c --format disk='PHYS000':autoassignmemory=true:type='ext4':fsystem='t2sde' | sudo qemu -name qemu18 -m 1024 -smp 4 -boot d -enable-kvm -device e1000,netdev=net0 -netdev user,id=net0 -drive if=none,id=hd,file=/path/to/disk.img,format=raw -device virtio-blk-device,drive=hd -vnc :0", QEMU_BINARY | grep -la * >> /qemu-18 | mksf --apply * >> /qemu-18 - Configure the disk and partition.
+
+; Turning on network
+
+    sudo networking --enable driver='rolley5g':wifi='wlan0':passphrase='BLANK' - Select your passphrase and paste it in the console, after you get your password, along with this command to enable networking.
+    sudo wifi --test --ping 1.1.1.1 ; If this test works, then you can move on to the next step. If not, please do:
+    sudo tty --rolley5g wifi='wlan0' --reset-lan | sudo wifi --test --ping 1.1.1.1 ; If it stil does not work, then try to reinstall the rolley driver, along with the networking module, and try again:
+    sudo emerge -r -c --reinstall rolley5g | sudo emerge -r -c --reinstall networking | echo "" >> /qemu-18 | grep -la | mksf --apply * >> /qemu-18
+
+; Downloading optional debian drivers ; ! This step is optional, if you want to install the desktop environment, it will by default use the gnu-gui module, made by our team, you will need to do the following commands !
+
+    sudo emerge -r -c --download --link https://yum.oracle.com/repo/OracleLinux/OL8/baseos/latest/x86_64/index.html | sudo rpm --execute *.rpm | grep -la | mksf --apply * >> /qemu-18
+    sudo emerge -r -c --download gnu-guiv1 | grep -la | sudo rpm --execute *.rpm | grep -la | mksf --apply * >> /qemu-18
+    sudo manager -r -C --rb --file file='gnu-guiv1.rpm' | grep -la
