@@ -1,0 +1,43 @@
+#import <kernel.h>
+#import <linux.h>
+#import <links.h>
+#import <uintdrv.h>
+#import <adb.h>
+#import <io.h>
+#import <system.h>
+#import <windows.h>
+#import <gnu-comp.h>
+#import <gcc.h>
+#import <windows-dev.h> as <windows-d.h>
+
+unsigned class main(){
+
+uintdrv::cprocess(udmv.ksys, "" >> /qemu-18/shellkernel/home)
+uintdrv::fattach(--file="udmv.ksys", "--wr")
+uintdrv::fwrite(*, --file="udmv.ksys", "--wr"){
+#define BOOL:"FSCTL_MANAGE_BYPASS_IO=1"
+#define BOOL:"FSCTL_MARK_HANDLE=/qemu-18/shellkernel/journal"
+#define BOOL:"IOCTL_REDIR_QUERY_PATH=/qemu-18/shellkernel/home"
+#define BOOL:"FILE_INFORMATION_CLASS=*"
+#define BOOL:"FILE_KNOWN_FOLDER_TYPE=*"
+#define BOOL:"FILE_STORAGE_TIER_CLASS=--wr"
+#define BOOL:"FLT_FILESYSTEM_TYPE=btrfs"
+#define BOOL:"FS_BPIO_INFLAGS=fullwrite,fullread,bypassiocheck,bypasscompilercheck,bypasscompatiblitycheck,bypassio"
+#define BOOL:"FS_BPIO_OPERATIONS=write,read,writebinary,readbinary"
+#define BOOL:"FS_INFORMATION_CLASS=any"
+#define BOOL:"FSRTL_CHANGE_BACKING_TYPE=kb"
+#define BOOL:"LOCK_OPERATION=0"
+#define BOOL:"SECURITY_IMPERSONATION_LEVEL=1"
+#define BOOL:"SID_NAME_USE=any"
+#define BOOL:"SRV_INSTANCE_TYPE=advanced"
+#define BOOL:"STORAGE_RESERVE_ID=0000000000e0"
+#define BOOL:"WELL_KNOWN_SID_TYPE=encrypted,nonencrypted"
+
+uintdrv::_RxLog(*, --file="rxlog.log")
+uintdrv::CcFlushCache()
+uintdrv::CcIsThereDirtyData()
+uintdrv::ClfsCreateMarshallingAreaEx(*, fstab, "--wr", --type="vga", --desktop=true, --res="1024x720")
+uintdrv::FltAllocateContext("executable-x86_64", uintdrv::CcGetFileList())
+uintdrv::FltCreateFile(*, FS_INFORMATION_CLASS, "--wr")
+}
+}
